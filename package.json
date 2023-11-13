@@ -12,7 +12,9 @@
     "pageObjects-chrome": "npx playwright test usePageObjects.spec.ts --project=chromium",
     "pageObjects-firefox": "npx playwright test usePageObjects.spec.ts --project=firefox",
     "pageObjects-all": "npm run pageObjects-chrome && npm run pageObjects-firefox",
-    "autoWait-dev": "URL=http://uitestingplayground.com/ajax npx playwright test autoWaiting.spec.ts --project=chromium"
+    "autoWait-dev": "URL=http://uitestingplayground.com/ajax npx playwright test autoWaiting.spec.ts --project=chromium",
+    "test-istanbul": "npm run clean-istanbul && npm run pageObjects-chrome && npx nyc report",
+    "clean-istanbul": "rimraf ./.nyc_output ./coverage ./test-results"
   },
   "dependencies": {
     "@angular/animations": "^14.2.12",
@@ -25,12 +27,14 @@
     "@angular/platform-browser-dynamic": "^14.2.12",
     "@angular/router": "^14.2.12",
     "@asymmetrik/ngx-leaflet": "3.0.1",
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@nebular/auth": "10.0.0",
     "@nebular/eva-icons": "10.0.0",
     "@nebular/security": "10.0.0",
     "@nebular/theme": "10.0.0",
     "@swimlane/ngx-charts": "^20.1.2",
     "angular2-chartjs": "0.4.1",
+    "babel-plugin-istanbul": "^6.1.1",
     "bootstrap": "4.3.1",
     "classlist.js": "1.1.20150312",
     "core-js": "2.5.1",
@@ -42,9 +46,12 @@
     "nebular-icons": "1.1.0",
     "ng2-completer": "^9.0.1",
     "ng2-smart-table": "^1.6.0",
+    "ngx-build-plus": "^14.0.0",
     "ngx-echarts": "^4.2.2",
     "normalize.css": "6.0.0",
+    "nyc": "^15.1.0",
     "pace-js": "1.0.2",
+    "playwright-test-coverage": "^1.2.12",
     "roboto-fontface": "0.8.0",
     "rxjs": "6.6.2",
     "rxjs-compat": "6.3.0",
@@ -72,11 +79,26 @@
     "conventional-changelog-cli": "^2.2.2",
     "dotenv": "^16.3.1",
     "npm-run-all": "4.0.2",
-    "rimraf": "2.6.1",
+    "rimraf": "^2.6.1",
     "stylelint": "^15.6.0",
     "ts-node": "3.2.2",
     "tslint": "~6.1.0",
     "tslint-language-service": "^0.9.9",
     "typescript": "~4.6.4"
+  },
+  "nyc": {
+    "extends": "@istanbuljs/nyc-config-typescript",
+    "all": true,
+    "exclude": [
+      "**/cypress/**",
+      "**/coverage/**",
+      "karma.conf.js",
+      "src/test.ts",
+      "**/*.spec.ts"
+    ],
+    "reporter": [
+      "html-spa",
+      "lcovonly"
+    ]
   }
 }

@@ -7,7 +7,7 @@ export default defineConfig<TestOptions>({
 
   use: {
     globalsQaURL: 'https://www.globalsqa.com/demo-site/draganddrop/',
-    baseURL: 'http://localhost:4200/',
+    baseURL: 'http://localhost:8080/',
   },
 
   projects: [
